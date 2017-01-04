@@ -7,8 +7,14 @@
     name: nginx
     state: latest
 
-- name: NGINX | config files 
+- name: be sure libselinux-python are installed or nginx file copies fail
+  yum:
+     name: libselinux-python
+     state: present
+
+- name: NGINX | config file 
   copy: src=../nginx/nginx.conf dest=/etc/nginx/nginx.conf
+- name: NGINX | server file 
   copy: src=../nginx/default.conf dest=/etc/nginx/conf.d/default.conf
 
 - name: NGINX | Starting NGINX
@@ -16,7 +22,3 @@
     name: nginx
     state: started
     enabled: yes
-
-
-- name: NGINX | copy app
-  copy: src=../app.php dest=/usr/share/nginx/html/app.php
