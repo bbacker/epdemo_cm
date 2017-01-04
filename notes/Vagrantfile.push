@@ -1,0 +1,35 @@
+# _*_ mode: ruby _*_
+
+VAGRANT_API_VERSION = "2"
+
+Vagrant.configure(VAGRANT_API_VERSION) do |config|
+  config.vm.box = "bento/centos-6.7"
+
+  config.vm.hostname = "egdemo"
+  config.vm.define "egdemo"
+
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  #config.vm.synced_folder "./salt", "/salt"
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "ansible/playbook.yml"
+  end
+
+  # to /usr/share/nginx/www
+
+
+  # I think you wanted app.php deployed by provisioning, not push, but if I'm
+  # wrong here's push
+
+  config.push.define "ftp" do |push|
+    push.host = "egdemo"
+    push.username = "vagrant"
+    push.password = "vagrant"
+    push.passive = false
+    push.secure = true
+    push.dir = "apps"
+    push.destination = "/usr/share/nginx/html"
+  end
+
+end

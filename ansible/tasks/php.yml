@@ -1,0 +1,10 @@
+- name: PHP | yum
+  yum:
+    name: php-fpm
+    state: latest
+ 
+- name: PHP | Starting PHP
+  service:
+    name: php-fpm
+    state: started
+    enabled: yes

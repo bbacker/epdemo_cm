@@ -2,4 +2,5 @@
   become: yes
   become_user: root
   tasks:
+    - include: 'tasks/php.yml'
     - include: 'tasks/nginx.yml'
