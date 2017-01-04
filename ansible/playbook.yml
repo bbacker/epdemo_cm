@@ -4,3 +4,4 @@
   tasks:
     - include: 'tasks/php.yml'
     - include: 'tasks/nginx.yml'
+    - include: 'tasks/app.yml'
